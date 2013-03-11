@@ -1,13 +1,25 @@
 ;;An's emacs conf
 
+;;load yasnippet
+(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; the snippet files themselvesx
+(yas/load-directory "~/.emacs.d/site-lisp/yasnippet/snippets/text-mode")
+;; ;;Let's have the snippets in the auto-complete dropdown
+;; (add-to-list 'ac-sources 'ac-source-yasnippet)
+
 ;;javascript mode
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'load-path "~/emacs.d/site-lisp/")
+;; (require 'cr-js)
+;; (autoload 'js2-mode "js2-mode" nil t)
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 ;; (add-hook 'js2-mode-hook 'my-common-mode-auto-pair)
 
 
 
-;;comment/uncomment
+;; comment/uncomment
 (defun qiang-comment-dwim-line (&optional arg)
   "Replacement for the comment-dwim command.
 If no region is selected and current line is not blank and we are not at the end of the line,
@@ -99,18 +111,6 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (global-set-key [f3] 'highlight-symbol-next)
 (global-set-key [(shift f3)] 'highlight-symbol-prev)
 (global-set-key [(meta f3)] 'highlight-symbol-prev)
-
-;;load yasnippet
-(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet-0.6.1c")
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/site-lisp/yasnippet-0.6.1c/snippets")
-;;load yasnippet automaticlly , not need to type alt+x eval-buffer
-(add-to-list 'load-path
-          "~/.emacs.d/site-lisp")
-;;(require 'yasnippet-bundle)
-
-
 
 ;;load cedet
 (load-file "~/.emacs.d/site-lisp/cedet-1.0.1/common/cedet.el")
@@ -260,3 +260,19 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+
+;; set auto-complete
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-complete-1.3.1/")
+; Load the default configuration
+(require 'auto-complete-config)
+; Make sure we can find the dictionaries
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete-1.3.1/dict")
+; Use dictionaries by default
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(global-auto-complete-mode t)
+; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2)
+; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
