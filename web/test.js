@@ -36,11 +36,13 @@ function closureTest2(){
     return arr;
 }
 
+
+
 function closureTest(){
     var arr = new Array();
     for(var i=0; i<10; i++){
 	arr[i] = function(){
-	    return i
+	    return i;
 	}();
 
     }
