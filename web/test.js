@@ -28,7 +28,7 @@ function closureTest2(){
     for(var i=0; i<10; i++){
 	arr[i] = function(num){
 	    return function(){
-		return num
+		return num;
 	    };
 	}(i);
 

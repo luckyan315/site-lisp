@@ -1,0 +1,1 @@
+var cluster = require('cluster');
