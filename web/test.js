@@ -1,5 +1,7 @@
 
 
+
+
 window.color = "red";
 
 var o = {
@@ -80,8 +82,6 @@ function onclickbtn(){
     // var p = new Person("zhangsan", "12"); 
     
     var arr3 = closureTest2 ();
-
-   
     alert(arr3[9]());
    
     // alert(arr);

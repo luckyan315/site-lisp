@@ -1,5 +1,13 @@
 ;;An's emacs conf
 
+;; 防止页面滚动时跳动,scroll-margin 3可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
+(setq scroll-margin 3
+     scroll-conservatively 10000)
+
+;;### Scroll mode line### 
+(load-file "~/.emacs.d/site-lisp/scroll-mode-line-mode.el")
+(scroll-mode-line-mode 1)
+
 ;; set auto-complete
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auto-complete-1.3.1/")
 ;; Load the default configuration
