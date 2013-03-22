@@ -1,6 +1,6 @@
-var net =  require('net');
+var http =  require('http');
 
-var server = net.createServer();
+var server = http.createServer();
 
 server.on('connection', function(client){
 

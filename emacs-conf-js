@@ -165,3 +165,17 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 
+;;js2-highlight vars
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'js2-highlight-vars)
+(if (featurep 'js2-highlight-vars)
+  (js2-highlight-vars-mode))
+
+;;set the smooth-scroll mode
+(add-to-list 'load-path "~/.emacs.d")
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
+;; (global-set-key [(control  down)]  'scroll-up-1)
+;; (global-set-key [(control  up)]    'scroll-down-1)
+;; (global-set-key [(control  left)]  'scroll-right-1)
+;; (global-set-key [(control  right)] 'scroll-left-1)
