@@ -1,3 +1,0 @@
-var Person = function(){
-  this.name = 'lisi';
-};
