@@ -23,6 +23,9 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'cr-js)
 
+;;json mode, hotkey: "C-c C-f"---> beautify-json
+(require 'json-mode)
+
 ;;rhtml mode
 (add-to-list 'load-path "~/.emacs.d/site-lisp/rhtml/")
 (require 'rhtml-mode)
