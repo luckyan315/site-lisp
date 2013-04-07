@@ -1,5 +1,8 @@
 ;;An's emacs 
 
+;;disable toolbar
+(tool-bar-mode nil)
+
 ;;show line number
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'linum)
