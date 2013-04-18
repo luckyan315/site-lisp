@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: <frameset>...</frameset>
+# key: frameset
+# --
+<frameset>
+  $0
+</head>

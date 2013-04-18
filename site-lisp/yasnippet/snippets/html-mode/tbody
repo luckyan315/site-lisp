@@ -1,0 +1,7 @@
+# contributor: Gwangrim An <lucky315.an@gmail.com>
+# name: <tbody class="...">...</tbody>
+# key: tbody
+# --
+<tbody>
+  $0
+</tbody>

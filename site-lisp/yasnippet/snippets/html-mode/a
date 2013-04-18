@@ -1,0 +1,5 @@
+# contributor: gwangrim an <lucky315.an@gmail.com>
+# name: <a class="..." href>...</a>
+# key: a
+# --
+<a class="$1" href="$2">$0</a>

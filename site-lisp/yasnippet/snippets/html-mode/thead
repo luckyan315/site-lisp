@@ -1,0 +1,7 @@
+# contributor: Gwangrim An <lucky315.an@gmail.com>
+# name: <thead class="...">...</thead>
+# key: thead
+# --
+<thead>
+  $0
+</thead>
