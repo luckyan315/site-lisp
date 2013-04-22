@@ -29,6 +29,11 @@
 ;;json mode, hotkey: "C-c C-f"---> beautify-json
 (require 'json-mode)
 
+;; ;;js2-highlight vars
+(require 'js2-highlight-vars)
+(if (featurep 'js2-highlight-vars)
+    (js2-highlight-vars-mode))
+
 ;;rhtml mode
 (add-to-list 'load-path "~/.emacs.d/site-lisp/rhtml/")
 (require 'rhtml-mode)
