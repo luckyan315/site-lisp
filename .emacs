@@ -21,7 +21,8 @@
 (require 'yasnippet) 
 (yas-global-mode 1)
 
-
+;;svn support
+(require 'psvn)
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'cr-js)
