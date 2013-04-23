@@ -24,6 +24,10 @@
 ;;svn support
 (require 'psvn)
 
+;;git suppor
+(add-to-list 'load-path "~/.emacs.d/site-lisp/git-emacs")
+(require 'git-emacs)
+
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'cr-js)
 
