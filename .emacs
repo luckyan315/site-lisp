@@ -1,5 +1,8 @@
 ;;An's emacs 
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'highlight-parentheses)
+
 ;;disable toolbar
 (tool-bar-mode nil)
 
