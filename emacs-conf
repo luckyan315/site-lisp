@@ -1,5 +1,20 @@
 ;;An's emacs conf
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;;hide toolbar in emacs
+(tool-bar-mode nil)
+
+;;save emacs's state, impl as like last memeroy
+(require 'session)
+(add-hook 'after-init-hook 'session-initialize)
+
+(require 'highlight-parentheses)
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ibus")
+(require 'ibus)
+;; (add-hook 'after-init-hook 'ibus-mode-on)
+
 ;;load yasnippet
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
 (require 'yasnippet)
