@@ -2,6 +2,74 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+;;xml formating
+(defun xml-format ()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (mark) (point) "xmllint --format -" (buffer-name) t)
+  )
+)
+
+;;hide toolbar in emacs
+(tool-bar-mode nil)
+
+(require 'session)
+(add-hook 'after-init-hook 'session-initialize)
+
+;; enable copy to clipboard 
+(setq x-select-enable-clipboard t)
+
+(require 'highlight-parentheses)
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ibus")
+(require 'ibus)
+;; (add-hook 'after-init-hook 'ibus-mode-on)
+
+;;show line number
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'linum)
+(global-linum-mode 1)
+
+;; 防止页面滚动时跳动,scroll-margin 3可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
+(setq scroll-margin 3
+      scroll-conservatively 10000)
+
+;;### Scroll mode line### 
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'scroll-mode-line-mode)
+
+;;load yasnippet
+(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
+(require 'yasnippet) 
+(yas-global-mode 1)
+
+;;svn support
+(require 'psvn)
+
+;;git-emacs support 
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/git-emacs/")
+;; (require 'git-emacs)
+(require 'git)
+
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'cr-js)
+
+;;json mode, hotkey: "C-c C-f"---> beautify-json
+(require 'json-mode)
+
+;; ;;js2-highlight vars
+(require 'js2-highlight-vars)
+(if (featurep 'js2-highlight-vars)
+    (js2-highlight-vars-mode))
+
+
+;;rhtml mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/rhtml/")
+(require 'rhtml-mode)
+
+
+
 ;;hide toolbar in emacs
 (tool-bar-mode nil)
 
@@ -24,15 +92,6 @@
 (yas/load-directory "~/.emacs.d/site-lisp/yasnippet/snippets/text-mode")
 ;; ;;Let's have the snippets in the auto-complete dropdown
 ;; (add-to-list 'ac-sources 'ac-source-yasnippet)
-
-;;javascript mode
-(add-to-list 'load-path "~/emacs.d/site-lisp/")
-;; (require 'cr-js)
-;; (autoload 'js2-mode "js2-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;; (add-hook 'js2-mode-hook 'my-common-mode-auto-pair)
-
-
 
 ;; comment/uncomment
 (defun qiang-comment-dwim-line (&optional arg)
