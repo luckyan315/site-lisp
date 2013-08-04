@@ -2,6 +2,16 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+;;find-file-suggest
+(require 'find-file-suggest)
+(global-set-key [(control x) (meta f)] 'find-file-suggest)
+(global-set-key [(control x) (meta g)] 'ffs-grep)
+
+(ffs-create-file-index "c9" "~/code/github/c9/" "\\.js$\\|\\.xml$" "\\.git$\\|node_modules\\|assets")
+(ffs-create-file-index "jsdav" "~/code/github/cuteKoder/demo/apf/node_modules/jsDAV/lib" "\\.js$" "\\.git$")
+(ffs-create-file-index "sdk" "~/code/github/cuteKoder/demo/apf" "\\.js$\\|\\.html$\\|\\.ejs$" "\\.git$\\|node_modules$\\|aasets$\\|support")
+(ffs-create-file-index "cloud9" "~/code/github/cloud9/" "\\.js$\\|\\.xml$" "\\.git$\\|node_modules\\|assets")
+
 ;;xml formating
 (defun xml-format ()
   (interactive)
