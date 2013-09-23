@@ -7,23 +7,6 @@
 ;; (setq flymake-node-jshint-config "~/.jshintrc-node.json")
 (add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
-
-;;evernote-mode
-(add-to-list 'load-path "~/.emacs.d/site-lisp/evernote")
-(require 'evernote-mode)
-(setq evernote-username "luckyan315@qq.com")
-(setq evernote-developer-token "S=s1:U=72fd1:E=147a18099ba:C=14049cf6dbc:P=1cd:A=en-devtoken:V=2:H=a75b60c8937b43ec0382839fa0526c75")
-(setq evernote-enml-formatter-command '("w3m" "-dump" "-I" "UTF8" "-O" "UTF8"))
-
-(global-set-key "\C-cec" 'evernote-create-note)
-(global-set-key "\C-ceo" 'evernote-open-note)
-(global-set-key "\C-ces" 'evernote-search-notes)
-(global-set-key "\C-ceS" 'evernote-do-saved-search)
-(global-set-key "\C-cew" 'evernote-write-note)
-(global-set-key "\C-cep" 'evernote-post-region)
-(global-set-key "\C-ceb" 'evernote-browser)
-
-
 ;;hot-key for org-mode
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
