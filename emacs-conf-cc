@@ -1,10 +1,82 @@
 ;;An's emacs 
-
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;;smart tab
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/smarttabs")
+;; (autoload 'smart-tabs-mode "smart-tabs-mode"
+;;    "Intelligently indent with tabs, align with spaces!")
+;; (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
+;; (autoload 'smart-tabs-advice "smart-tabs-mode")
+;; (autoload 'smart-tabs-insinuate "smart-tabs-mode")
+
+;; (smart-tabs-insinuate 'javascript)
+
+;;add javascript syntax check : flymake-node-jshint
+(add-to-list 'load-path "~/.emacs.d/site-lisp/flymake-node-jshint")
+(require 'flymake-node-jshint)
+;; (setq flymake-node-jshint-config "~/.jshintrc-node.json")
+;; auto open flymake-mode while open file as js-mode
+;; (add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
+
+
+;;evernote-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/evernote")
+(require 'evernote-mode)
+(setq evernote-username "luckyan315@qq.com")
+(setq evernote-developer-token "S=s1:U=72fd1:E=147a18099ba:C=14049cf6dbc:P=1cd:A=en-devtoken:V=2:H=a75b60c8937b43ec0382839fa0526c75")
+(setq evernote-enml-formatter-command '("w3m" "-dump" "-I" "UTF8" "-O" "UTF8"))
+
+(global-set-key "\C-cec" 'evernote-create-note)
+(global-set-key "\C-ceo" 'evernote-open-note)
+(global-set-key "\C-ces" 'evernote-search-notes)
+(global-set-key "\C-ceS" 'evernote-do-saved-search)
+(global-set-key "\C-cew" 'evernote-write-note)
+(global-set-key "\C-cep" 'evernote-post-region)
+(global-set-key "\C-ceb" 'evernote-browser)
+
+
+;;hot-key for org-mode
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+;;find-file-suggest
+(require 'find-file-suggest)
+(global-set-key [(control x) (meta f)] 'find-file-suggest)
+(global-set-key [(control x) (meta g)] 'ffs-grep)
+
+(ffs-create-file-index "c9" "~/code/github/c9/" "\\.js$\\|\\.xml$" "\\.git$\\|node_modules\\|assets")
+(ffs-create-file-index "xterm" "~/code/xterm-297/" "\\.c$\\|\\.h$" "\\.git$")
+(ffs-create-file-index "lumap" "~/code/lumap/" "" "\\third$") ;;\\.c$\\|\\.h$\\|\\.cpp
+
+(ffs-create-file-index "putty" "~/code/github/cute-putty/" "\\.js$\\|\\.ejs$" "\\.git$\\|node_modules\\|assets")
+
+;; (ffs-create-file-index "jsdav" "~/code/github/cuteKoder/demo/apf/node_modules/jsDAV/lib" "\\.js$" "\\.git$")
+(ffs-create-file-index "sdk" "~/code/github/cuteKoder/demo/apf" "\\.js$\\|\\.html$\\|\\.ejs$" "\\.git$\\|node_modules$\\|aasets$\\|support")
+;; (ffs-create-file-index "linux" "~/code/linux-3.4.6/" "\\.c$\\|\\.h$" "\\.git$\\|node_modules\\|assets")
+
+;;xml formating
+(defun xml-format ()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (mark) (point) "xmllint --format -" (buffer-name) t)
+  )
+)
+
+;;hide toolbar in emacs
+(tool-bar-mode nil)
+
+(require 'session)
+(add-hook 'after-init-hook 'session-initialize)
+
+;; enable copy to clipboard 
+(setq x-select-enable-clipboard t)
+
 (require 'highlight-parentheses)
 
-;;disable toolbar
-(tool-bar-mode nil)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ibus")
+(require 'ibus)
+;; (add-hook 'after-init-hook 'ibus-mode-on)
 
 ;;show line number
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
@@ -27,12 +99,19 @@
 ;;svn support
 (require 'psvn)
 
-;;git suppor
-(add-to-list 'load-path "~/.emacs.d/site-lisp/git-emacs")
+;;git-emacs support 
+(add-to-list 'load-path "~/.emacs.d/site-lisp/git-emacs/")
 (require 'git-emacs)
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
-(require 'cr-js)
+(require 'cr-js) ;;include js2-mode
+
+;;if just to use js2-mode
+;; (autoload 'js2-mode "js2-mode" nil t)
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;;
+(require 'flymake-cursor)
 
 ;;json mode, hotkey: "C-c C-f"---> beautify-json
 (require 'json-mode)
@@ -41,6 +120,7 @@
 (require 'js2-highlight-vars)
 (if (featurep 'js2-highlight-vars)
     (js2-highlight-vars-mode))
+
 
 ;;rhtml mode
 (add-to-list 'load-path "~/.emacs.d/site-lisp/rhtml/")
@@ -213,7 +293,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 ;; Enable source code folding
 
-(global-semantic-tag-folding-mode 1)
+;; (global-semantic-tag-folding-mode 1)
 
 (defun my-cedet-hook ()
 
@@ -245,8 +325,8 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 ;;install ecb 
-;; (add-to-list 'load-path "/home/luckyan315/.emacs.d/site-lisp/ecb-2.40")
-;; (require 'ecb)
+(add-to-list 'load-path "/home/luckyan315/.emacs.d/site-lisp/ecb")
+(require 'ecb)
 
 ;;;auto start ecb 
 ;; (setq ecb-auto-activate t
@@ -271,16 +351,16 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ecb-options-version "2.40"))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  )
 
 ;;set auto-complete
@@ -296,12 +376,6 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq ac-auto-start 2)
 					; case sensitivity is important when finding matches
 (setq ac-ignore-case nil)
-
-;;js2-mode
-;; (autoload 'js2-mode "js2-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-
 
 ;;在buffer和shell之间快速切换需要加载shell-toggle.el
 (autoload 'shell-toggle "shell-toggle"
@@ -333,10 +407,10 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 ;;;; CC-mode配置  http://cc-mode.sourceforge.net/
-(require 'cc-mode)
-(c-set-offset 'inline-open 0)
-(c-set-offset 'friend '-)
-(c-set-offset 'substatement-open 0)
+;; (require 'cc-mode)
+;; (c-set-offset 'inline-open 0)
+;; (c-set-offset 'friend '-)
+;; (c-set-offset 'substatement-open 0)
 
 ;;;;我的C/C++语言编辑策略
 
@@ -403,3 +477,13 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;; set c-mode indentation style
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+;; set c++-mode indentation style
+(setq c++-default-style "linux"
+      c++-basic-offset 4)
+
+;;gdb hot-key visual studio style
+(add-hook 'gdb-mode-hook '(lambda ()
+                            (define-key c-mode-base-map [(f5)] 'gud-go)
+                            (define-key c-mode-base-map [(f10)] 'gud-step)
+                            (define-key c-mode-base-map [(f11)] 'gud-next)))
