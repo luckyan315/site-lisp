@@ -485,5 +485,5 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;;gdb hot-key visual studio style
 (add-hook 'gdb-mode-hook '(lambda ()
                             (define-key c-mode-base-map [(f5)] 'gud-go)
-                            (define-key c-mode-base-map [(f10)] 'gud-step)
-                            (define-key c-mode-base-map [(f11)] 'gud-next)))
+                            (define-key c-mode-base-map [(f11)] 'gud-step)
+                            (define-key c-mode-base-map [(f10)] 'gud-next)))
