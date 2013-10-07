@@ -5,7 +5,7 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/flymake-node-jshint")
 (require 'flymake-node-jshint)
 ;; (setq flymake-node-jshint-config "~/.jshintrc-node.json")
-(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
+;;(add-hook 'js-mode-hook (lambda () (flymake-mode 1)))
 
 ;;hot-key for org-mode
 (global-set-key "\C-cl" 'org-store-link)
