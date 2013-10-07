@@ -406,13 +406,13 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq mouse-wheel-progressive-speed nil)
 
 
-;;;; CC-mode配置  http://cc-mode.sourceforge.net/
-;; (require 'cc-mode)
-;; (c-set-offset 'inline-open 0)
-;; (c-set-offset 'friend '-)
-;; (c-set-offset 'substatement-open 0)
+;;CC-mode配置  http://cc-mode.sourceforge.net/
+(require 'cc-mode)
+(c-set-offset 'inline-open 0)
+(c-set-offset 'friend '-)
+(c-set-offset 'substatement-open 0)
 
-;;;;我的C/C++语言编辑策略
+;;c-mode 
 
 (defun my-c-mode-common-hook()
   (setq tab-width 4 indent-tabs-mode nil)
@@ -434,14 +434,26 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
   (setq hs-minor-mode t)
   (setq abbrev-mode t)
   )
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+;; (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
-;;;;我的C++语言编辑策略
+;; c++-mode
 (defun my-c++-mode-hook()
-  (setq tab-width 4 indent-tabs-mode nil)
-  (c-set-style "stroustrup")
+  (setq tab-width 4)
+  (setq indent-tabs-mode t)
+  (c-set-offset 'substatement-open 0)
+  (c-set-style "bsd")
+  (setq c-basic-offset 4)
+  (c-toggle-auto-hungry-state 0)
+  ;;;minor modes
+  (auto-fill-mode 1)
+  (c-turn-on-eldoc-mode)
+  ;;local keys
+  (local-set-key [return] 'newline-and-indent)
+  
   ;;  (define-key c++-mode-map [f3] 'replace-regexp)
   )
+
+(add-hook 'c-mode-common-hook 'my-c++-mode-hook)
 
 ;; 实现全屏效果，快捷键为f11
 (global-set-key [f11] 'my-maximized)
