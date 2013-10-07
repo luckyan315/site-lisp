@@ -333,7 +333,10 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 (global-set-key [M-down] 'windmove-down)
 
+;;rebind back/forward paragraph
+(global-set-key (kbd "M-[") 'backward-paragraph)
 
+(global-set-key (kbd "M-]") 'forward-paragraph)
 
 ;;;; 隐藏和显示ecb窗口
 
