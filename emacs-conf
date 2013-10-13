@@ -357,18 +357,57 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
   ;; If there is more than one, they won't work right.
  )
 
-
 ;; set auto-complete
-
-(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-complete-1.3.1/")
-; Load the default configuration
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+					; Load the default configuration
 (require 'auto-complete-config)
-; Make sure we can find the dictionaries
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete-1.3.1/dict")
-; Use dictionaries by default
+					; Make sure we can find the dictionaries
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+					; Use dictionaries by default
 (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
 (global-auto-complete-mode t)
-; Start auto-completion after 2 characters of a word
+					; Start auto-completion after 2 characters of a word
 (setq ac-auto-start 2)
-; case sensitivity is important when finding matches
-(setq ac-ignore-case nil)
+					; case sensitivity is important when finding matches
+(setq ac-ignore-case t)
+;; (setq ac-auto-show-menu 0.3)
+
+;; clang for c++
+(load-file "~/.emacs.d/site-lisp/auto-complete-clang/auto-complete-clang.el")  
+
+(require 'auto-complete-clang)
+
+(setq ac-clang-flags
+      (mapcar (lambda (item)(concat "-I" item))
+              (split-string
+               "
+ /usr/include/c++/4.6
+ /usr/include/c++/4.6/i686-linux-gnu/.
+ /usr/include/c++/4.6/backward
+ /usr/lib/gcc/i686-linux-gnu/4.6/include
+ /usr/local/include
+ /usr/lib/gcc/i686-linux-gnu/4.6/include-fixed
+ /usr/include/i386-linux-gnu
+ /usr/include
+
+"
+               )))
+
+;; (setq ac-quick-help-delay 0.5)
+;; (ac-set-trigger-key "TAB")
+;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
+(define-key ac-mode-map  [(meta /)] 'auto-complete)
+(defun my-ac-config ()
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+  ;; (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+(defun my-ac-cc-mode-setup ()
+  (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+;; ac-source-gtags
+(my-ac-config)
+
