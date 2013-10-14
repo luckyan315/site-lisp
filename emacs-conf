@@ -372,7 +372,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq ac-ignore-case t)
 ;; (setq ac-auto-show-menu 0.3)
 
-;; clang for c++
+;; clang for c++ (pre_condition: sudo apt-get install clang )
 (load-file "~/.emacs.d/site-lisp/auto-complete-clang/auto-complete-clang.el")  
 
 (require 'auto-complete-clang)
