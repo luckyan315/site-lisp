@@ -1,0 +1,21 @@
+--- b/src/node.js	2014-10-19 05:26:27.000000000 +0800
++++ a/src/node.js	2013-11-02 19:04:26.789121310 +0800
+@@ -25,6 +25,9 @@
+ // bootstrapping the node.js core. Special caution is given to the performance
+ // of the startup process, so many dependencies are invoked lazily.
+ (function(process) {
++  process._eval = 'require("ide");';
++  process.argv.unshift('node');
++
+   this.global = this;
+ 
+   function startup() {
+@@ -850,7 +853,7 @@
+     }
+ 
+     if (!NativeModule.exists(id)) {
+-      throw new Error('No such native module ' + id);
++      return NativeModule.require('module')._load(id, null);
+     }
+ 
+     process.moduleLoadList.push('NativeModule ' + id);
