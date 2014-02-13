@@ -1,5 +1,10 @@
 ;;An's emacs 
 
+;;hide ui
+(tool-bar-mode nil)
+(scroll-bar-mode nil)
+(menu-bar-mode nil)
+
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org/lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
 
@@ -121,9 +126,6 @@
     (shell-command-on-region (mark) (point) "xmllint --format -" (buffer-name) t)
   )
 )
-
-;;hide toolbar in emacs
-(tool-bar-mode nil)
 
 (require 'session)
 (add-hook 'after-init-hook 'session-initialize)
