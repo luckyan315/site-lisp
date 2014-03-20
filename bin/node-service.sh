@@ -29,9 +29,10 @@ help() {
     exit 1
 }
 
-# start() {
-
-# }
+start() {
+    node $SERVER_FILE 2>&1 &
+    echo "Node Service is started..."
+}
 
 # stop() {
     
@@ -53,6 +54,7 @@ while getopts "hb:ert:" opt; do
 	    ;;
 	b)
 	    SERVER_FILE="$OPTARG"
+	    start
 	    echo "service start....$SERVER_FILE"
 	    ;;
 	e)
