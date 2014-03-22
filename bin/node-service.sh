@@ -3,8 +3,12 @@
 # Node service controller skel script
 # Copyright (C) 2014 guanglin.an (lucky315.an@gmail.com )
 
+#cur dir path
+DIR_NAME="$(cd "$(dirname "$0")" && pwd)"
+
 NODE_PID="$!"
 SERVER_FILE=
+PID_FILE="app.pid"
 
 quit() {
     trap - TERM QUIT INT EXIT
@@ -29,18 +33,40 @@ help() {
     exit 1
 }
 
-start() {
-    node $SERVER_FILE 2>&1 &
-    echo "Node Service is started..."
+get_pid() {
+    pid_file_path="${DIR_NAME}/$PID_FILE"
+    if [ -f "$pid_file_path" ]; then
+	echo `cat $pid_file_path`
+    fi
 }
 
-# stop() {
-    
-# }
+start() {
+    pid=`get_pid`
+    if [ ! -z $pid ]; then
+	echo "server is already running.."
+    else
+	node $SERVER_FILE 2>&1 &
+	echo "Node Service is started..."	
+    fi
 
-# restart() {
-    
-# }
+}
+
+stop() {
+    pid=`get_pid`
+    if [ -z $pid ]; then
+	echo 'Node Service not running'
+    else
+	kill -15 $pid
+	echo 'Node Service stopped!'
+    fi
+}
+
+restart() {
+    stop
+    sleep 0.5
+    echo restarting....
+    start
+}
 
 if [ $# -lt 1 ]; then
     help
@@ -55,13 +81,12 @@ while getopts "hb:ert:" opt; do
 	b)
 	    SERVER_FILE="$OPTARG"
 	    start
-	    echo "service start....$SERVER_FILE"
 	    ;;
 	e)
-	    echo "service stop...."
+	    stop
 	    ;;
 	r)
-	    echo "service restart..."
+	    restart
 	    ;;
 	t)
 	    arg="$OPTARG"
