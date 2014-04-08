@@ -1,5 +1,8 @@
 ;;An's emacs 
 
+;;height 100 = 10 pt
+(set-face-attribute 'default nil :height 100)
+
 ;;(Ctrl + `)  Eval lisp 
 (global-set-key (kbd "C-`") 'eval-last-sexp)
 
