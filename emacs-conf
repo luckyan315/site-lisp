@@ -1,5 +1,10 @@
 ;;An's emacs 
 
+;;(Ctrl + `)  Eval lisp 
+(global-set-key (kbd "C-`") 'eval-last-sexp)
+
+(ido-mode 'buffers)
+
 ;;hide ui
 (tool-bar-mode nil)
 (scroll-bar-mode nil)
