@@ -1,5 +1,11 @@
 ;;An's emacs 
 
+;;hide lines
+(require 'hide-lines)
+(global-set-key (kbd "C-c l") 'hide-lines)
+(global-set-key (kbd "C-c C-c l") 'hide-lines-not-matching)
+(global-set-key (kbd "C-c L") 'hide-lines-show-all)
+
 
 ;;quick switch mark
 (global-set-key [(control ?\.)] 'ska-point-to-register)
