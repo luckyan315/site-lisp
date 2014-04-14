@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# --
+/**
+ * 
+ * Copyright (C) 2014 guanglin.an (lucky315.an@gmail.com)
+ * 
+ */
+
+"use strict";
+
+/**
+ * global dependance module
+ */
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+
+var ${1:classname} = exports = module.exports = function() {
+  EventEmitter.call(this);
+
+};
+
+util.inherits($1, EventEmitter);
+
+(function(){
+
+}).call($1.prototype);
