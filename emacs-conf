@@ -178,6 +178,12 @@ that was stored with ska-point-to-register."
 (require 'session)
 (add-hook 'after-init-hook 'session-initialize)
 
+;; Save opened buffers 
+;; M-x desktop-save , M-x desktop-clear
+(load "desktop")
+(desktop-load-default)
+(desktop-read)
+
 ;; enable copy to clipboard 
 (setq x-select-enable-clipboard t)
 
