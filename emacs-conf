@@ -34,7 +34,11 @@ that was stored with ska-point-to-register."
 ;;(Ctrl + `)  Eval lisp 
 (global-set-key (kbd "C-`") 'eval-last-sexp)
 
-(ido-mode 'buffers)
+;; ido mode
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+(setq ido-use-filename-at-point 'guess)
 
 ;;hide ui
 (tool-bar-mode nil)
