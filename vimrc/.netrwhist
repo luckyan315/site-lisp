@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/luckyan315/node_modules/express/node_modules/connect'
+let g:netrw_dirhist_2='/home/luckyan315/code/github/cute-putty/public'
+let g:netrw_dirhist_3='/home/luckyan315/code/github/cute-putty'
+let g:netrw_dirhist_4='/home/luckyan315/code/github'
+let g:netrw_dirhist_5='/home/luckyan315/code/github/js2-mode'
+let g:netrw_dirhist_6='/home/luckyan315/code/github'
+let g:netrw_dirhist_7='/home/luckyan315/.vim'
