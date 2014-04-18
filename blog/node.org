@@ -183,6 +183,23 @@ $cp js2-highlight-vars.el ~/.emacs.d
 只要输入名字片断如果几个匹配的选项中已经在第一个位置的话直接回车就能
 打开文件，或者按下tab就能直接打开文件了 , 恢常方便^^
 
+** session / desktop mode
+程序猿一般不喜欢关机的原因无非就是想保存开发时候的上下文， 具体来说就是打开的文件， 光标所在位置， 剪贴板内容
+上次修改的cursor位置，当前编辑器的layout 等等...
+session mode 和 desktop 配合起来就能完美解决保存emacs 上下文的问题
+#+BEGIN_EXAMPLE
+$cd ~/.emacs.d/site-lisp
+$wget http://www.emacswiki.org/emacs/download/session.el
+
+把以下内容贴到~/.emacs里面
+(require 'session)
+(add-hook 'after-init-hook 'session-initialize)
+
+(load "desktop")
+(desktop-load-default)
+(desktop-read)
+
+#+END_EXAMPLE
 
 ** find-file-suggest
 遇到多级项目工程目录结构，是否“C-x C-f" 按到手痛？或者添加 bookmark ?
