@@ -169,6 +169,21 @@ $cp js2-highlight-vars.el ~/.emacs.d
 #+END_EXAMPLE
 * 其他各种通用神器
 介绍通用的emacs写代码必备神器， 相信你肯定也需要^^
+** ido-mode
+很多人是不是因为“C-x C-f"因为有大小写区分而苦恼...苦了我们的小指去按住个"Shift"...
+这个插件就会让我们只要输入文件名的片断就能定位到文件夹和文件名， 非常便利
+把以下内容，插入到~/.emacs的某个角落
+#+BEGIN_EXAMPLE
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+(setq ido-use-filename-at-point 'guess)
+#+END_EXAMPLE
+无论"C-x C-f" 打开文件/文件夹, 还是用"C-x b" 打开buffer files,
+只要输入名字片断如果几个匹配的选项中已经在第一个位置的话直接回车就能
+打开文件，或者按下tab就能直接打开文件了 , 恢常方便^^
+
+
 ** find-file-suggest
 遇到多级项目工程目录结构，是否“C-x C-f" 按到手痛？或者添加 bookmark ?
 
