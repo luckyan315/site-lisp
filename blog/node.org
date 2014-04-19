@@ -167,12 +167,24 @@ $cp js2-highlight-vars.el ~/.emacs.d
 (if (featurep 'js2-highlight-vars)
     (js2-highlight-vars-mode))
 #+END_EXAMPLE
+** highlight-parentheses
+是不是很多初学者对node 深层嵌套苦恼过， 有时候括号太多，都不知道到底匹配的是哪个括号？
+这个插件会用不同颜色高亮显示括号颜色， 特别是深层嵌套的时候一眼就能看出匹配的括号，非常实用^^
+#+BEGIN_EXAMPLE
+$cd ~/.emacs.d/site-lisp
+$wget http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el
+
+修改~/.emacs文件
+(require 'highlight-parentheses)
+#+END_EXAMPLE
+   
 * 其他各种通用神器
 介绍通用的emacs写代码必备神器， 相信你肯定也需要^^
 ** ido-mode
 很多人是不是因为“C-x C-f"因为有大小写区分而苦恼...苦了我们的小指去按住个"Shift"...
 这个插件就会让我们只要输入文件名的片断就能定位到文件夹和文件名， 非常便利
 把以下内容，插入到~/.emacs的某个角落
+
 #+BEGIN_EXAMPLE
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
