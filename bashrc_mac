@@ -9,6 +9,7 @@ alias cnpm="npm --registry=http://registry.npm.taobao.org \
 alias fan=$HOME_NODE/fanyi/bin/fanyi
 alias mocha=$HOME_NODE/mocha/bin/mocha
 alias compound=$HOME_NODE/compound/bin/compound.js
+alias t='make test'
 
 alias rm='rm -i'
 alias cp='cp -i'
