@@ -1,5 +1,9 @@
 # An's bashrc 
 
+#nvm
+export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com
+source ~/code/github/nvm/nvm.sh
+
 HOME_NODE=$HOME/node_modules
 alias cnpm="npm --registry=http://registry.npm.taobao.org \
 --cache=$HOME/.npm/.cache/cnpm \
