@@ -1,0 +1,88 @@
+set nocompatible
+set number
+filetype on
+set history=1000
+set autoindent
+set smartindent
+set showmatch
+set ruler
+set incsearch
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set hlsearch
+set tags=tags
+set helplang=cn
+set encoding=utf-8
+
+map <F3> :silent! Tlist<CR>
+let Tlist_Ctags_Cmd='ctags'
+let Tlist_Use_Right_Window=0
+let Tlist_Show_One_File=0
+let Tlist_File_Fold_Auto_Close=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Process_File_Always=0
+let Tlist_WinWidth=40
+
+map <F4> <ESC>:NERDTreeToggle<CR>
+let NERDTreeWinPos = "right"
+let NERDTreeWinSize = 30
+let NERDTreeMouseMode = 2
+
+let g:LookupFile_MinPatLength = 2
+let g:LookupFile_PreserveLastPattern = 0
+let g:LookupFile_PreservePatternHistory = 1
+let g:LookupFile_AlwaysAcceptFirst = 1
+let g:LookupFile_AllowNewFiles = 0
+
+set t_Co=256
+let g:molokai_original = 1
+colorscheme molokai
+
+"
+
+syntax enable
+syntax on
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cscope setting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
+
+
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+let g:minBufExplMapCTabSwitchBufs=1
+let g:minBufExplMapWindowNavVim=1
+let g:minBufExplMapWindowNavArrow=1
+
+filetype plugin indent on
+set completeopt=longest,menu
+
+autocmd BufReadPost *
+	\ if line("'\"") > 1 && line("'\"") <= line("$") |
+	\   exe "normal! g`\"" |
+	\ endif
+

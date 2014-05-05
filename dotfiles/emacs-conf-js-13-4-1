@@ -1,0 +1,196 @@
+;;An's emacs conf
+
+;; ;;[new] background color solution
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'color-theme)
+(load-file "~/.emacs.d/site-lisp/color-theme-blackboard.el")
+(color-theme-blackboard)
+
+
+;;javascript mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+(require 'cr-js)
+
+;;swtich toggle between 'buffer' and 'shell'
+(autoload 'shell-toggle "shell-toggle"
+  "Toggles between the *shell* buffer and whatever buffer you are editing." t)
+(autoload 'shell-toggle-cd "shell-toggle"
+  "Pops up a shell-buffer and insert a \"cd <file-dir>\" command." t)
+(global-set-key [C-f9] 'shell-toggle-cd)
+
+;;Don't create tmp files ...(e.g: ~tmp)
+(setq make-backup-files nil)
+(setq-default make-backup-files nil)
+
+
+;;load xcscope
+(require 'cc-mode)
+(load-file "/usr/share/emacs23/site-lisp/xcscope.el")
+(require 'xcscope)
+
+;; ;;set js3-mode
+;; ;; '(js3-auto-indent-p t)
+;; ;; '(js3-enter-indents-newline t)
+;; ;; '(js3-indent-on-enter-key t)
+
+;;rhtml mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/rhtml/")
+(require 'rhtml-mode)
+
+
+;;set the smooth-scroll mode, just awailable in emacs 23.2.1
+(add-to-list 'load-path "~/.emacs.d")
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
+(global-set-key [(control  down)]  'scroll-up-1)
+(global-set-key [(control  up)]    'scroll-down-1)
+;; (global-set-key [(control  left)]  'scroll-right-1)
+;; (global-set-key [(control  right)] 'scroll-left-1)
+
+;; ;; 防止页面滚动时跳动,scroll-margin 3可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
+;; (setq scroll-margin 3
+;;      scroll-conservatively 10000)
+
+;; ;; ;;### Scroll mode line### 
+;; ;; (load-file "~/.emacs.d/site-lisp/scroll-mode-line-mode.el")
+;; ;; (scroll-mode-line-mode 1)
+
+
+;; set auto-complete
+(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-complete-1.3.1/")
+;; Load the default configuration
+(require 'auto-complete-config)
+;; Make sure we can find the dictionaries
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete-1.3.1/dict")
+;; Use dictionaries by default
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(global-auto-complete-mode t)
+;; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2)
+;; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
+
+
+
+
+;; ;;load yasnippet
+(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+
+
+
+;; comment/uncomment
+(defun qiang-comment-dwim-line (&optional arg)
+  "Replacement for the comment-dwim command.
+If no region is selected and current line is not blank and we are not at the end of the line,
+then comment current line.
+Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+(global-set-key "\M-;" 'qiang-comment-dwim-line)
+
+
+;; Smart copy, if no region active, it simply copy the current whole line
+(defadvice kill-line (before check-position activate)
+  (if (member major-mode
+              '(emacs-lisp-mode scheme-mode lisp-mode
+                                c-mode c++-mode objc-mode js-mode
+                                latex-mode plain-tex-mode))
+      (if (and (eolp) (not (bolp)))
+          (progn (forward-char 1)
+                 (just-one-space 0)
+                 (backward-char 1)))))
+ 
+(defadvice kill-ring-save (before slick-copy activate compile)
+  "When called interactively with no active region, copy a single line instead."
+  (interactive (if mark-active (list (region-beginning) (region-end))
+                 (message "Copied line")
+                 (list (line-beginning-position)
+                       (line-beginning-position 2)))))
+ 
+(defadvice kill-region (before slick-cut activate compile)
+  "When called interactively with no active region, kill a single line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+ 
+;; Copy line from point to the end, exclude the line break
+(defun qiang-copy-line (arg)
+  "Copy lines (as many as prefix argument) in the kill ring"
+  (interactive "p")
+  (kill-ring-save (point)
+                  (line-end-position))
+                  ;; (line-beginning-position (+ 1 arg)))
+  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+ 
+(global-set-key (kbd "M-k") 'qiang-copy-line)
+
+;; ;;show line number
+(load-file "~/.emacs.d/site-lisp/linum.el")
+(require 'linum)
+(global-linum-mode 1)
+
+;; ;;ctrl + scroll , implement zoom in/out
+(global-set-key [C-mouse-4] 'text-scale-increase)
+(global-set-key [C-mouse-5] 'text-scale-decrease)
+
+;;highlight the word
+(load-file "~/.emacs.d/site-lisp/highlight-symbol.el")
+(require 'highlight-symbol)                                                  
+;;(global-set-key "/C-cgg" 'highlight-symbol-at-point)
+(global-set-key [(control f3)] 'highlight-symbol-at-point)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+(global-set-key [(meta f3)] 'highlight-symbol-prev)
+
+;; ;;install ecb
+;;(add-to-list 'load-path "/home/luckyan315/.emacs.d/site-lisp/ecb-2.32/")
+;;(require 'ecb)				
+
+;;;auto start ecb
+;; (setq ecb-auto-activate t
+      ;; ecb-tip-of-the-day nil)
+
+;;;; 各窗口间切换
+
+(global-set-key [M-left] 'windmove-left)
+
+(global-set-key [M-right] 'windmove-right)
+
+(global-set-key [M-up] 'windmove-up)
+
+(global-set-key [M-down] 'windmove-down)
+
+
+
+;; ;;;; 隐藏和显示ecb窗口
+
+;;(define-key global-map [(control f1)] 'ecb-hide-ecb-windows)
+
+;;(define-key global-map [(control f2)] 'ecb-show-ecb-windows)
+
+;; (custom-set-variables
+;;   ;; custom-set-variables was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(ecb-options-version "2.32"))
+;; (custom-set-faces
+;;   ;; custom-set-faces was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  )
+
+;; ;;js2-highlight vars
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'js2-highlight-vars)
+(if (featurep 'js2-highlight-vars)
+  (js2-highlight-vars-mode))
+
