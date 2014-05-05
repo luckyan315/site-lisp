@@ -221,6 +221,16 @@ that was stored with ska-point-to-register."
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'cr-js) ;;include js2-mode
 
+;; coffeescript , v0.4.0
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\.coffee$" . coffee-mode)) 
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode)) 
+;; 保存文件时自动compile: 
+(add-hook 'coffee-mode-hook '(lambda () (coffee-cos-mode t))) 
+;; 开启自动补全: 
+(add-to-list 'ac-modes 'coffee-mode)
+
+
 ;;if just to use js2-mode
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
