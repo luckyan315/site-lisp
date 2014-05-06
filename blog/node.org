@@ -6,41 +6,33 @@
 
 * 简介
 之前的因为项目用node来构建，网上搜集了相关的插件，涉及到整个开发流程，共大家参考
+以下所有涉及到的文件，都可以在 https://github.com/luckyan315/site-lisp 这里找到。
 * javascript / node.js 语法相关
 ** js2-mode 
 对于使用emacs来开发javascript的人来说js2-mode应该是必备神器，此工具可以提示js语法错误，
 并用红色下滑线给予提示(当初像我这样js语法都没有过关的人来讲确实帮助挺大的^^)
-
 配置过程：
-
 #+BEGIN_EXAMPLE
 $ svn checkout http://js2-mode.googlecode.com/svn/trunk/ js2-mode
 $ cd js2-mode
 $ emacs --batch -f batch-byte-compile js2-mode.el
 $ cp js2-mode.elc ~/.emacs.d/
 #+END_EXAMPLE
-
 *有的童鞋可能会问怎么修改~/.emacs 文件，下面我会一起提供*
 
 ** espresso
 刚接触node的人对缩进会有些头痛，这个插件就帮我们搞定node的缩进
-
 #+BEGIN_EXAMPLE
 $wget http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el
 $cp ./espresso.el ~/.emacs.d/
 #+END_EXAMPLE
-
 *因为使用espresso的时候可能会跟yasnippet的快捷键冲突，建议大家按照下面进行修改*
-
 首先创建nodejs.el文件
-
 #+BEGIN_EXAMPLE
 $touch ~/.emacs.d/nodejs.el
 #+END_EXAMPLE
-
 把以下内容拷贝到nodejs.el里面
-
-#+BEGIN_SRC javascript
+#+BEGIN_SRC emacs-lisp
 ;;;; load & configure js2-mode 
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
@@ -61,8 +53,6 @@ $touch ~/.emacs.d/nodejs.el
 (indent-for-tab-command)
 (if (looking-back "^\s*")
 (back-to-indentation))))))))
- 
- 
  
 (defun my-js2-indent-function ()
 (interactive)
@@ -147,18 +137,15 @@ c-basic-offset 2)
 
 (provide 'nodejs)
 #+END_SRC
-
 然后最后修改~/.emacs 文件,增加以下内容
-
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC emacs-lisp
 (require 'nodejs)
-#+END_EXAMPLE
+#+END_SRC
 
 ** exuberant-ctags 提供类似Go To Definition 功能
 此工具给我们提供跳到函数定义处类似的功能 , 不过如果出现同名函数的话还是会出现误跳的现象。
 
 所以如果对函数名命名的时候多加考虑的话一般还是可以准确的跳转到定义处的。
-
 #+BEGIN_EXAMPLE
 $sudo apt-get install exuberant-ctags
 $cd your_project_dir
@@ -176,12 +163,12 @@ $cp js2-highlight-vars.el ~/.emacs.d
 
 修改~/.emacs文件
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC emacs-lisp
 ;; ;;js2-highlight vars
 (require 'js2-highlight-vars)
 (if (featurep 'js2-highlight-vars)
     (js2-highlight-vars-mode))
-#+END_EXAMPLE
+#+END_SRC
    
 * 其他各种通用神器
 介绍通用的emacs写代码必备神器， 相信你肯定也需要^^
@@ -191,12 +178,12 @@ $cp js2-highlight-vars.el ~/.emacs.d
 这个插件就会让我们只要输入文件名的片断就能定位到文件夹和文件名， 非常便利
 把以下内容，插入到~/.emacs的某个角落
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC emacs-lisp
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
 (setq ido-use-filename-at-point 'guess)
-#+END_EXAMPLE
+#+END_SRC
 
 无论"C-x C-f" 打开文件/文件夹, 还是用"C-x b" 打开buffer files,
 只要输入名字片断如果几个匹配的选项中已经在第一个位置的话直接回车就能
@@ -210,16 +197,16 @@ session mode 和 desktop 配合起来就能完美解决保存emacs 上下文的�
 #+BEGIN_EXAMPLE
 $cd ~/.emacs.d/site-lisp
 $wget http://www.emacswiki.org/emacs/download/session.el
-
+#+END_EXAMPLE
 把以下内容贴到~/.emacs里面
+#+BEGIN_SRC emacs-lisp
 (require 'session)
 (add-hook 'after-init-hook 'session-initialize)
 
 (load "desktop")
 (desktop-load-default)
 (desktop-read)
-
-#+END_EXAMPLE
+#+END_SRC
 
 ** find-file-suggest
 遇到多级项目工程目录结构，是否“C-x C-f" 按到手痛？或者添加 bookmark ?
@@ -235,25 +222,22 @@ $cp find-file-suggest_2010-03-02 ~/.emacs.d
 #+END_EXAMPLE
 
 然后修改~/.emacs,把以下内容添加进去
-
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC emacs-lisp
 ;;find-file-suggest
 (require 'find-file-suggest)
 (global-set-key [(control x) (meta f)] 'find-file-suggest)
 (global-set-key [(control x) (meta g)] 'ffs-grep)
-#+END_EXAMPLE
+#+END_SRC
 
 然后就是要建立搜引，以下给出两个node工程和C/C++工程的例子
-
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC emacs-lisp
 ;;c/c++ 工程创建索引(参数：别名, 工程目录, 要索引的文件名后缀, 要过滤的文件夹)
 (ffs-create-file-index "ejoy" "~/code/github/ejoy2d" "\\.h\\|\\.c\\|\\.lua" "\\doc$\\|\\.git$")
 ;;js/node.js 工程创建索引
 (ffs-create-file-index "sails" "/usr/local/lib/node_modules/sails/lib" "\\.js\\|\\.ejs\\|\\.html" "") 
-#+END_EXAMPLE
+#+END_SRC
 
 用法：
-
 #+BEGIN_EXAMPLE
 - 打开emacs， 输入 "M-x ffs-use-file-index" 回车
 - 输入 ejoy2d(之前建立的工程别名) 回车
@@ -269,11 +253,13 @@ $cp find-file-suggest_2010-03-02 ~/.emacs.d
 #+BEGIN_EXAMPLE
 $wget http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el
 $cp highlight-parentheses.el ~/.emacs.d
+#+END_EXAMPLE
 修改~/.emacs
+#+BEGIN_SRC emacs-lisp
 (require 'highlight-parentheses)
 打开emacs
 (M-x highlight-parentheses-mode) 来触发该功能
-#+END_EXAMPLE
+#+END_SRC
 
 ** tramp 直接修改服务端代码或配置文件如同本地操作
 emscs23 以上版本开始已经把tramp集成进去了，所以免额外的配置过程，直接使用。
@@ -426,6 +412,17 @@ $cp git-emacs ~/.emacs.d
 | m/u/SPC | 设置/取消/切换标记，标记用于批量处理文件 |
 |---------+------------------------------------------|
 | a       | 将文件加入版本控制              |
+|---------+------------------------------------------|
+| i       | 将文件加入ignore                    |
+|---------+------------------------------------------|
+| c       | 提交                                     |
+|---------+------------------------------------------|
+
+
+* 总结
+以上所有涉及到的文件，都可以在 https://github.com/luckyan315/site-lisp 这里找到，希望这个文章对大家学习 node 或者 emacs 有所帮助!
+今天就到这里，改天继续^^ 
+控制              |
 |---------+------------------------------------------|
 | i       | 将文件加入ignore                    |
 |---------+------------------------------------------|
