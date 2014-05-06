@@ -293,12 +293,14 @@ $wget http://yasnippet.googlecode.com/files/yasnippet-0.6.1c.tar.bz2
 $cp yasnippet-0.6.1c ~/.emacs.d
 $cd ~/.emacs.d
 $mv yasnippet-0.6.1c yasnippet
+#+END_EXAMPLE
 修改~/.emacs
+#+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path
              "~/.emacs.d/yasnippet")
 (require 'yasnippet) ;; not yasnippet-bundle
 (yas-global-mode 1)
-#+END_EXAMPLE
+#+END_SRC
 
 *当我们安装js2-mode之后，我们需要手动创建一个js2-mode相关的snippets*
 
@@ -314,10 +316,12 @@ $cp -r js-mode js2-mode
 #+BEGIN_EXAMPLE
 $wget http://lifegoo.pluskid.org/wiki/lisp/psvn.el
 $cp ./psvn.el ~/.emacs.d
+#+END_EXAMPLE
 修改~/.emacs, 添加以下内容
+#+BEGIN_SRC emacs-lisp
 ;;svn support
 (require 'psvn)
-#+END_EXAMPLE
+#+END_SRC
 
 具体用法:
 
