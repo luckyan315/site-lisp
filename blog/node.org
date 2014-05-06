@@ -6,7 +6,7 @@
 
 * 简介
 之前的因为项目用node来构建，网上搜集了相关的插件，涉及到整个开发流程，共大家参考
-以下所有涉及到的文件，都可以在 https://github.com/luckyan315/site-lisp 这里找到。
+以下所有涉及到的文件，都可以在 https://github.com/luckyan315/site-lisp 这里找到^^
 * javascript / node.js 语法相关
 ** js2-mode 
 对于使用emacs来开发javascript的人来说js2-mode应该是必备神器，此工具可以提示js语法错误，
@@ -169,7 +169,26 @@ $cp js2-highlight-vars.el ~/.emacs.d
 (if (featurep 'js2-highlight-vars)
     (js2-highlight-vars-mode))
 #+END_SRC
-   
+
+** coffeescript mode 
+最近工作需要，需要用到coffeescript (https://github.com/defunkt/coffee-mode),
+使用emacs23版本的人用coffeescript 0.4.1
+使用emacs24的人直接用最新版本即可
+不多说，配置如下(因为我自己用23版本，就下载0.4.1版本为例):
+#+BEGIN_EXAMPLE
+$cd ~/.emacs.d/
+$wget https://github.com/luckyan315/site-lisp/raw/master/site-lisp/coffee-mode.el
+#+END_EXAMPLE
+修改~/.emacs
+#+BEGIN_SRC emacs-lisp
+;; coffeescript
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\.coffee$" . coffee-mode)) 
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode)) 
+;; 保存文件时自动compile: 
+(add-hook 'coffee-mode-hook '(lambda () (coffee-cos-mode t))) 
+#+END_SRC
+
 * 其他各种通用神器
 介绍通用的emacs写代码必备神器， 相信你肯定也需要^^
 
