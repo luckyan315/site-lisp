@@ -31,6 +31,8 @@ alias c='clear && pwd'             # clear the screen easily
 
 # Git aliases for bash
 alias g='git'
+alias gf='git fetch'
+asias gr='git rebase'
 alias gst='git status'
 alias gl='git pull'
 alias gp='git push'
