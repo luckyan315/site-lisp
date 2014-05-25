@@ -11,3 +11,4 @@ cp ./dotfiles/emacs-conf $HOME/.emacs
 mkdir -p $HOME/.vim > /dev/null 2>&1
 cp -r ./dotfiles/vimrc/* $HOME/.vim
 cp ./dotfiles/vimrc/vimrc $HOME/.vim
+cp -r ./dotfiles/git-completion.bash $HOME/.git-completion.bash
