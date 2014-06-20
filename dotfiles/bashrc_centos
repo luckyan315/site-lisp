@@ -12,7 +12,9 @@ fi
 
 # nvm 
 export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com
-source ~/.nvm/nvm.sh
+export NVM_DIR=~/.nvm
+. ~/.nvm/nvm.sh
+
 # default node version
 nvm use 0.10.28 > /dev/null 2>&1
 
