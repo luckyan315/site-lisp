@@ -55,7 +55,7 @@ git config --global alias.unstage 'reset HEAD --'
 git config --global alias.last 'log -p -1 HEAD'
 git config --global alias.visual "!gitk"
 
-source ~/.git-completion.sh
+# source ~/.git-completion.sh > /dev/null 2>&1
 
 # Some shortcuts for different directory listings
 alias dir='ls --format=vertical'
