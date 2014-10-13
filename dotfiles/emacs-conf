@@ -1,4 +1,17 @@
-;;An's emacs 
+;;An's emacs
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
+
+
+;; emacs whitespace mode
+(require 'whitespace)
+(global-whitespace-mode)
+(setq whitespace-style
+	  '(face trailing tabs lines lines-tail empty
+		space-after-tab space-before-tab))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 
 ;;hide lines
 (require 'hide-lines)
@@ -11,8 +24,8 @@
 (global-set-key [(control ?\.)] 'ska-point-to-register)
 (global-set-key [(control ?\,)] 'ska-jump-to-register)
 (defun ska-point-to-register()
-  "Store cursorposition _fast_ in a register. 
-Use ska-jump-to-register to jump back to the stored 
+  "Store cursorposition _fast_ in a register.
+Use ska-jump-to-register to jump back to the stored
 position."
   (interactive)
   (setq zmacs-region-stays t)
@@ -31,7 +44,7 @@ that was stored with ska-point-to-register."
 ;;height 100 = 10 pt
 (set-face-attribute 'default nil :height 100)
 
-;;(Ctrl + `)  Eval lisp 
+;;(Ctrl + `)  Eval lisp
 (global-set-key (kbd "C-`") 'eval-last-sexp)
 
 ;; ido mode
@@ -44,9 +57,6 @@ that was stored with ska-point-to-register."
 (tool-bar-mode nil)
 (scroll-bar-mode nil)
 (menu-bar-mode nil)
-
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org/lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
 
 ;;markdown-mode
 (autoload 'markdown-mode "markdown-mode"
@@ -85,7 +95,7 @@ that was stored with ska-point-to-register."
 (global-set-key [(control x) (meta g)] 'ffs-grep)
 
 (ffs-create-file-index "ejoy" "~/code/github/ejoy2d" "\\.h\\|\\.c\\|\\.lua" "\\doc$\\|\\.git$") ;;\\.c$\\|\\.h$\\|\\.cpp
-(ffs-create-file-index "sails" "/usr/local/lib/node_modules/sails/lib" "\\.js\\|\\.ejs\\|\\.html" "") 
+(ffs-create-file-index "sails" "/usr/local/lib/node_modules/sails/lib" "\\.js\\|\\.ejs\\|\\.html" "")
 
 
 ;; Make the ansi Chinese chars visible
@@ -178,13 +188,13 @@ that was stored with ska-point-to-register."
 (require 'session)
 (add-hook 'after-init-hook 'session-initialize)
 
-;; Save opened buffers 
+;; Save opened buffers
 ;; M-x desktop-save , M-x desktop-clear
 (load "desktop")
 (desktop-load-default)
 (desktop-read)
 
-;; enable copy to clipboard 
+;; enable copy to clipboard
 (setq x-select-enable-clipboard t)
 
 (require 'highlight-parentheses)
@@ -202,19 +212,19 @@ that was stored with ska-point-to-register."
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-;;### Scroll mode line### 
+;;### Scroll mode line###
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'scroll-mode-line-mode)
 
 ;;load yasnippet
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
-(require 'yasnippet) 
+(require 'yasnippet)
 (yas-global-mode 1)
 
 ;;svn support
 (require 'psvn)
 
-;;git-emacs support 
+;;git-emacs support
 (add-to-list 'load-path "~/.emacs.d/site-lisp/git-emacs/")
 (require 'git-emacs)
 
@@ -223,11 +233,11 @@ that was stored with ska-point-to-register."
 
 ;; coffeescript , v0.4.0
 (require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\.coffee$" . coffee-mode)) 
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode)) 
-;; 保存文件时自动compile: 
-(add-hook 'coffee-mode-hook '(lambda () (coffee-cos-mode t))) 
-;; 开启自动补全: 
+(add-to-list 'auto-mode-alist '("\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+;; 保存文件时自动compile:
+(add-hook 'coffee-mode-hook '(lambda () (coffee-cos-mode t)))
+;; 开启自动补全:
 (add-to-list 'ac-modes 'coffee-mode)
 
 
@@ -308,7 +318,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 ;;不显示GNU emacs启动界面
-(setq inhibit-startup-message t) 
+(setq inhibit-startup-message t)
 
 ;; 尽快显示按键序列
 (setq echo-keystrokes 0.1)
@@ -323,7 +333,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-;;### Scroll mode line### 
+;;### Scroll mode line###
 (load-file "~/.emacs.d/site-lisp/scroll-mode-line-mode.el")
 (scroll-mode-line-mode 1)
 
@@ -335,7 +345,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 ;;highlight the word
 (load-file "~/.emacs.d/site-lisp/highlight-symbol.el")
-(require 'highlight-symbol)                                                   
+(require 'highlight-symbol)
 ;;(global-set-key "/C-cgg" 'highlight-symbol-at-point)
 (global-set-key [(control f3)] 'highlight-symbol-at-point)
 (global-set-key [f3] 'highlight-symbol-next)
@@ -346,7 +356,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 
 
-;; ;;load cedet 
+;; ;;load cedet
 ;; (load-file "~/.emacs.d/site-lisp/cedet-1.0.1/common/cedet.el")
 
 ;; (setq semanticdb-project-roots
@@ -448,11 +458,11 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (add-to-list 'magic-mode-alist'("#ifndef" . c++-mode))
 
 
-;;install ecb 
+;;install ecb
 (add-to-list 'load-path "/home/luckyan315/.emacs.d/site-lisp/ecb")
 ;; (require 'ecb)
 
-;;;auto start ecb 
+;;;auto start ecb
 ;; (setq ecb-auto-activate t
 ;; ecb-tip-of-the-day nil)
 ;;;; 各窗口间切换
@@ -500,7 +510,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;;在buffer和shell之间快速切换END
 ;;不产生备份文件,临时文件
 (setq make-backup-files nil)
-(setq-default make-backup-files nil) 
+(setq-default make-backup-files nil)
 
 
 ;; set the smooth-scroll
@@ -560,7 +570,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
   ;; ;;;minor modes
   ;; (auto-fill-mode 1)
   ;; cscope hot-key would be not work!!!!!
-  ;; (c-turn-on-eldoc-mode) 
+  ;; (c-turn-on-eldoc-mode)
   ;;local keys
   (local-set-key [return] 'newline-and-indent)
   ;;  (define-key c++-mode-map [f3] 'replace-regexp)
@@ -586,7 +596,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;; (setq ac-auto-show-menu 0.3)
 
 ;; clang for c++
-(load-file "~/.emacs.d/site-lisp/auto-complete-clang/auto-complete-clang.el")  
+(load-file "~/.emacs.d/site-lisp/auto-complete-clang/auto-complete-clang.el")
 
 (require 'auto-complete-clang)
 
