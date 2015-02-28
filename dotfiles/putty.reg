@@ -1,0 +1,27 @@
+Windows Registry Editor Version 5.00
+[HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ubuntu]
+"Colour0"="211,215,207"
+"Colour1"="238,238,236"
+"Colour2"="46,52,54"
+"Colour3"="85,87,83"
+"Colour4"="0,0,0"
+"Colour5"="0,255,0"
+"Colour6"="46,52,54"
+"Colour7"="85,87,83"
+"Colour8"="204,0,0"
+"Colour9"="239,41,41"
+"Colour10"="78,154,6"
+"Colour11"="138,226,52"
+"Colour12"="196,160,0"
+"Colour13"="252,233,79"
+"Colour14"="52,101,164"
+"Colour15"="114,159,207"
+"Colour16"="117,80,123"
+"Colour17"="173,127,168"
+"Colour18"="6,152,154"
+"Colour19"="52,226,226"
+"Colour20"="211,215,207"
+"Colour21"="238,238,236"
+"Font"="Fixedsys"
+"FontCharSet"=dword:00000086
+"FontHeight"=dword:0000000c
