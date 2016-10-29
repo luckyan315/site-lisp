@@ -1,0 +1,7 @@
+# contributor: gwangrim an <lucky315.an@gmail.com>
+# name: <fieldset>...</fieldset>
+# key: fieldset
+# --
+<fieldset>
+  $0
+</fieldset>

@@ -1,0 +1,5 @@
+# contributor: Gwangrim An <lucky315.an@gmail.com>
+# name: <label class="...">...</label>
+# key: label
+# --
+<label class="$1">$0</label>

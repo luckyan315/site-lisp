@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: <frame>...</frame>
+# key: frame
+# --
+<frame src="$1" name="$2" >

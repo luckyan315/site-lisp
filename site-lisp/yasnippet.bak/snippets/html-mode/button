@@ -1,0 +1,5 @@
+# contributor: Gwangrim An<lucky315.an@gmail.com>
+# name: <button type=".." class=".." name=".." ... />
+# key: button
+# --
+<button type="$1" class="$2" name="$3" value="$4" >$0</button>

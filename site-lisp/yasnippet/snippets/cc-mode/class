@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# --
+
+namespace yunos {
+
+/**
+ * $0
+ */
+class ${1: `(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`} : public BasePtr {
+public:
+        $1();
+    	virtual ~$1();
+};
+
+} // end of namespace yunos
