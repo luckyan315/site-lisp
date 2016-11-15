@@ -1,15 +1,100 @@
 ;;An's emacs
 
+;;; Mac OS X Setup
+;;; The Mac may fail to find cscope
+(when (eq system-type 'darwin)
+;;; exec path
+  (setq exec-path (append '("/usr/local/bin")
+                          exec-path)))
+
 ;; global path config
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org/lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
 
+;; cpputil-cmake
+;; stop create makefile for flymake
+(setq cppcm-write-flymake-makefile nil)
+
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (if (derived-mode-p 'c-mode 'c++-mode)
+                (cppcm-reload-all)
+              )))
+;; OPTIONAL, somebody reported that they can use this package with Fortran
+;; (add-hook 'c90-mode-hook (lambda () (cppcm-reload-all)))
+;; OPTIONAL, avoid typing full path when starting gdb
+;; (global-set-key (kbd "C-c C-g")
+ ;; '(lambda ()(interactive) (gud-gdb (concat "gdb --fullname " (cppcm-get-exe-path-current-buffer)))))
+;; OPTIONAL, some users need specify extra flags forwarded to compiler
+;; (setq cppcm-extra-preprocss-flags-from-user '("-I/usr/src/linux/include" "-DNDEBUG"))
+
+;; flymake
+;; Let's run 8 checks at once instead.
+(setq flymake-max-parallel-syntax-checks 8)
+
+;; I don't want no steekin' limits.
+(setq flymake-max-parallel-syntax-checks nil)
+
+;; I want to see at most the first 4 errors for a line.
+(setq flymake-number-of-errors-to-display 4)
+
+;; I want to see all errors for the line.
+(setq flymake-number-of-errors-to-display nil)
+
+
+;; gtags
+(autoload 'gtags-mode "gtags" "" t)
+
+(setq c-mode-hook
+'(lambda ()
+(gtags-mode 1)))
+(setq c++-mode-hook
+'(lambda ()
+(gtags-mode 1)))
+
+(setq gtags-mode-hook
+      '(lambda ()
+	 (global-set-key (kbd "s-t") 'gtags-find-tag)
+	 (global-set-key (kbd "s-r") 'gtags-find-rtag)
+	 (global-set-key (kbd "s-.") 'gtags-find-symbol)
+	 (global-set-key (kbd "s--") 'gtags-pop-stack)
+))
+
+
+;; helm-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/helm")
+(require 'helm-config)
+(require 'helm)
+(helm-mode 1)
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+;; use package
+(add-to-list 'load-path "~/.emacs.d/site-lisp/use-package")
+(eval-when-compile
+  (require 'use-package))
+
+(add-hook 'after-init-hook 'global-company-mode)
+
 (setq x-select-enable-clipboard t)
 (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
+;; line spacing
+(setq-default line-spacing 4)
+
 ;; select ctags
 (require 'etags-select)
+
+(setq cc-other-file-alist
+      '(("\\.c"   (".h"))
+	("\\.cpp"   (".h"))
+	("\\.h"   (".c"".cpp"))))
+
+(setq ff-search-directories
+      '("." "../src" "../include"))
+
+;;; Bind the toggle function to a global key
+(global-set-key "\M-t" 'ff-find-other-file)
 
 ;; switch between header and source files
 (add-hook 'c-mode-common-hook
@@ -56,6 +141,8 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
 
+(load-theme 'material t)
+
 ;;
 ;; (require 'js2-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -68,19 +155,28 @@
 ;; ;;;; CC-mode配置  http://cc-mode.sourceforge.net/
 (add-to-list 'load-path "~/.emacs.d/site-lisp/cc-mode")
 (require 'cc-mode)
-(c-set-offset 'inline-open 0)
+(c-set-offset 'inline-open 3)
 (c-set-offset 'friend '-)
 (c-set-offset 'substatement-open 0)
+(c-set-offset 'innamespace 0)
+
+;; special indent for namespace
+(defconst my-cc-style
+  '("c++-mode"
+    (c-offsets-alist . ((innamespace . [0])))))
+
+(c-add-style "my-cc-mode" my-cc-style)
 
 ;; ;;;;我的C++语言编辑策略
 (defun my-c++-mode-hook()
+  (c-set-style "Linux")
   (setq tab-width 4)
-  (setq indent-tabs-mode t)
+  (setq indent-tabs-mode nil)
   (c-set-offset 'substatement-open 0)
-  (c-set-style "bsd")
+  (c-set-offset 'innamespace 0)
   (setq c-basic-offset 4)
-  ;; ;;;minor modes
-  ;; (auto-fill-mode 1)
+  ;;;minor modes
+  (auto-fill-mode 1)
   ;; cscope hot-key would be not work!!!!!
   ;; (c-turn-on-eldoc-mode)
   ;;local keys
@@ -89,6 +185,7 @@
   )
 
 (add-hook 'c-mode-common-hook 'my-c++-mode-hook)
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
 ;; flx support
 (require 'flx-ido)
@@ -111,7 +208,6 @@
 (global-set-key (kbd "C-`") 'eval-last-sexp)
 
 ;;load xcscope
-(load-file "~/.emacs.d/site-lisp/xcscope.el/xcscope.el")
 (require 'xcscope)
 (cscope-setup)
 
@@ -123,6 +219,7 @@
 (edit-server-start)
 
 ;; disalbe toolbar
+(tool-bar-mode -1)
 (menu-bar-mode nil)
 
 ;; emacs whitespace mode
@@ -262,22 +359,56 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (setq-default make-backup-files nil)
 
 ;; menlo font
-(set-frame-font "Menlo:pixelsize=18")
+(set-frame-font "Menlo:pixelsize=12")
 ;; If you use Emacs Daemon mode
 (add-to-list 'default-frame-alist
-                            (cons 'font "Menlo:pixelsize=18"))
+                            (cons 'font "Menlo:pixelsize=12"))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#262626"))
+ '(custom-safe-themes
+   (quote
+    ("98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" default)))
  '(ecb-options-version "2.40")
+ '(fci-rule-color "#3a3a3a")
+ '(hl-sexp-background-color "#121212")
  '(safe-local-variable-values
    (quote
     ((ffip-prune-patterns "*/.git/*" "*/node_modules/*" "*/index.js")
      (ffip-patterns "*.java" "*.cpp" "*.c" "*.h" "*.js")
      (ffip-find-options . "-not -size +64k -not -iwholename '*/dist/*'")
-     (ffip-project-root . "/Volumes/android/frameworks/")))))
+     (ffip-project-root . "/Volumes/android/frameworks/"))))
+ '(tab-stop-list
+   (quote
+    (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#f36c60")
+     (40 . "#ff9800")
+     (60 . "#fff59d")
+     (80 . "#8bc34a")
+     (100 . "#81d4fa")
+     (120 . "#4dd0e1")
+     (140 . "#b39ddb")
+     (160 . "#f36c60")
+     (180 . "#ff9800")
+     (200 . "#fff59d")
+     (220 . "#8bc34a")
+     (240 . "#81d4fa")
+     (260 . "#4dd0e1")
+     (280 . "#b39ddb")
+     (300 . "#f36c60")
+     (320 . "#ff9800")
+     (340 . "#fff59d")
+     (360 . "#8bc34a"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -292,3 +423,27 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 (global-set-key "\C-cx" 'simpleclip-cut)
 (global-set-key "\C-cc" 'simpleclip-copy)
 (global-set-key "\C-cv" 'simpleclip-paste)
+
+(customize-variable (quote tab-stop-list))
+
+(defun my-fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen 'fullboth) ;this makes the frame go fullscreen
+  (tool-bar-mode -1) ;these 3 lines turn off GUI junk
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1))
+
+(defun my-non-fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'width 82)
+  (set-frame-parameter nil 'fullscreen 'fullheight)
+  (menu-bar-mode t)) ;I don't turn tool-bar and scroll-bar back on b/c I never want them
+
+(defun toggle-fullscreen ()
+  (interactive)
+  (if (eq (frame-parameter nil 'fullscreen) 'fullboth)  ;tests if already fullscreened
+      (my-non-fullscreen)
+    (my-fullscreen)))
+
+(global-set-key [f9] 'toggle-fullscreen)
+(global-set-key (kbd "s-<return>") 'toggle-fullscreen)
