@@ -5,7 +5,8 @@
 #group: doxygen
 # --
 /**
- * @file ${1:`(file-name-nondirectory(buffer-file-name))`}
- * @note ${2: Class Description.}
+ * {{{ Copyright (C) 2016 The YunOS Project. All rights reserved. }}}
  *
-}*/
+ *  Created on: `(format-time-string "%Y-%m-%d")`$0
+ *      Author: guanglin.agl@alibaba-inc.com
+ */

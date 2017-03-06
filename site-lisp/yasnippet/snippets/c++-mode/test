@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: test
+# key: test
+# --
+TEST_F(${1: `(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}, $2) {
+    $0
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name : AELOGD
+# key  : log
+# --
+AELOGD("$1");

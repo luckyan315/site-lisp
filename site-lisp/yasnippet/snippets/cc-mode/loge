@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name : AELOGE
+# key  : loge
+# --
+AELOGE("$1");

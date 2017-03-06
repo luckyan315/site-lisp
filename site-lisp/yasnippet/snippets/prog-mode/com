@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: generate doxygen style function comment
+# key: com
+# --
+//———$1${1:$(make-string (- 47 aya-tab-position (length yas-text)) ?—)}$0
