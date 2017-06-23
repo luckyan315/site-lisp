@@ -11,9 +11,60 @@
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs")
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org/lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
+;; (add-to-list 'load-path "~/.emacs.d/~/.emacs.d/elpa")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/org/contrib/lisp")
 
+;; benchmark require
+(add-to-list 'load-path "~/.emacs.d/site-lisp/benchmark-init-el/")
+(require 'benchmark-init-loaddefs)
+(benchmark-init/activate)
+
+(package-initialize)
+
+(require 'company-sourcekit)
+(add-to-list 'company-backends 'company-sourcekit)
+
+(require 'eopengrok)
+
+(define-key global-map (kbd "C-c s i") 'eopengrok-create-index)
+(define-key global-map (kbd "C-c s I") 'eopengrok-create-index-with-enable-projects)
+(define-key global-map (kbd "C-c s d") 'eopengrok-find-definition)
+(define-key global-map (kbd "C-c s f") 'eopengrok-find-file)
+(define-key global-map (kbd "C-c s s") 'eopengrok-find-reference)
+(define-key global-map (kbd "C-c s t") 'eopengrok-find-text)
+(define-key global-map (kbd "C-c s h") 'eopengrok-find-history)
+(define-key global-map (kbd "C-c s c") 'eopengrok-find-custom)
+(define-key global-map (kbd "C-c s b") 'eopengrok-resume)
+
+(defun sudo-edit (&optional arg)
+  "Edit currently visited file as root.
+
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current
+buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+(global-set-key (kbd "C-x C-r") 'sudo-edit)
+
+;; helm-cscope
+;; Enable helm-cscope-mode
+(add-hook 'c-mode-hook 'helm-cscope-mode)
+(add-hook 'c++-mode-hook 'helm-cscope-mode)
+;; Set key bindings
+(eval-after-load "helm-cscope"
+  '(progn
+     (define-key helm-cscope-mode-map (kbd "M-t") 'helm-cscope-find-symbol)
+     (define-key helm-cscope-mode-map (kbd "M-r") 'helm-cscope-find-global-definition)
+     (define-key helm-cscope-mode-map (kbd "M-g M-c") 'helm-cscope-find-called-function)
+     (define-key helm-cscope-mode-map (kbd "M-g M-p") 'helm-cscope-find-calling-this-funtcion)
+     (define-key helm-cscope-mode-map (kbd "M-s") 'helm-cscope-select)))
+
+;; swift flycheck
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-swift3-setup))
 
 ;; cleanup
 (defun cleanup-org-tables ()
@@ -26,6 +77,8 @@
 (add-hook 'markdown-mode-hook
           (lambda()
             (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
+
+;;(scroll-bar-mode -1)
 
 ;; buffer regsion eval
 (defun eval-region-or-buffer ()
@@ -110,9 +163,9 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 
 ;; use package
-(add-to-list 'load-path "~/.emacs.d/site-lisp/use-package")
-(eval-when-compile
-  (require 'use-package))
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/use-package")
+;; (eval-when-compile
+;;   (require 'use-package))
 
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -314,6 +367,7 @@
 
 ;;### Scroll mode line###
 (require 'scroll-mode-line-mode)
+;;(toggle-scroll-bar 1)
 
 ;;include js2-mode
 (require 'cr-js)
